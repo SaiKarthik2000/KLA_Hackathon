@@ -27,12 +27,15 @@ def printlog1(task,path):
             pt=path+".NoOfDefects"
             dic[pt]=len(df)
         else:
-            condition="$(M2A_Workflow.TaskA.NoOfDefects) > 4"
+            condition=task["Condition"]
             cond=condition.split(" ")
             err=int(cond[2])
-            #ops[cond[1]]
             con=cond[0]
             con=con[2:-1]
+            print(con)
+            print(dic)
+            if(con not in dic):
+                time.sleep(5)
             if((cond[1]=='<' and dic[con]<err) or (cond[1]=='>' and dic[con]>err)):
                 sen=str(datetime.now())+";"+path+" Executing "+task["Function"]+" ("+task["Inputs"]["Filename"]+")"
                 lis.append(sen)
@@ -55,7 +58,11 @@ def task_execution(data,path,ex):
         path1=path+'.'+list(data.keys())[i]
         data1=data[list(data.keys())[i]]
         if ex=="Concurrent":
-            if(data1["Function"]=="DataLoad"):
+            if("Function" not in data1):
+                x=threading.Thread(target=printlog,args=(data1,path1))
+                x.start()
+                x.join()
+            elif("Condition" in data1 or "Filename" in data1["Inputs"]):
                 x1=threading.Thread(target=printlog1,args=(data1,path1))
                 x1.start()
                 li.append(x1)   
@@ -64,7 +71,11 @@ def task_execution(data,path,ex):
                 x1.start()
                 li.append(x1)
         else:
-            if(data1["Function"]=="DataLoad"):
+            if("Function" not in data1):
+                x=threading.Thread(target=printlog,args=(data1,path1))
+                x.start()
+                x.join()
+            elif("Condition" in data1 or "Filename" in data1["Inputs"]):
                 x=threading.Thread(target=printlog1,args=(data1,path1))
                 x.start()
                 x.join()
@@ -92,6 +103,7 @@ def flow_execution(data,path,n):
             x=threading.Thread(target=printlog,args=(data,path))
             x.start()
             x.join()
+    
 
 global dic
 f1= open("m2a.txt","w+")
