@@ -2,7 +2,9 @@ import yaml
 from datetime import datetime
 import _thread
 import time
+import threading
 def printlog(task,path):
+
     sen=str(datetime.now())+";"+path+" Entry"
     lis.append(sen)
     if(task['Type']=="Task"):
@@ -22,7 +24,9 @@ def task_execution(data,path,ex):
         if ex=="Concurrent":
             _thread.start_new_thread(printlog,(data1,path1))
         else:
-            printlog(data1,path1)
+            x=threading.Thread(target=printlog(data1,path1))
+            x.start()
+            x.join()
 
 def flow_execution(data,path,n):
     ex=""
@@ -39,11 +43,14 @@ def flow_execution(data,path,n):
         count=1
     if(count==0):
         if(data["Type"]=="Flow"):
-            printlog(data,path)
+            x=threading.Thread(target=printlog(data,path))
+            x.start()
+            x.join()
 
-f1= open("m1a.txt","w+")
+
+f1= open("m1b.txt","w+")
 lis=[]
-with open('G:\College\Code\KLA\Milestone1A.yaml') as ms1a:
+with open('G:\College\Code\KLA\Milestone1B.yaml') as ms1a:
     data = yaml.load(ms1a, Loader=yaml.FullLoader)
 path=""
 if(data[list(data.keys())[0]]["Type"]=="Flow"):
