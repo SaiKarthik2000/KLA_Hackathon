@@ -1,0 +1,7 @@
+2022-03-08 16:39:12.111112;M2A_Workflow Entry
+2022-03-08 16:39:12.111112;M2A_Workflow.TaskA Entry
+2022-03-08 16:39:12.111112;M2A_Workflow.TaskA Executing DataLoad (Milestone2A_DataInput1.csv)
+2022-03-08 16:39:12.114137;M2A_Workflow.TaskA Exit
+2022-03-08 16:39:12.114137;M2A_Workflow.TaskB Entry
+2022-03-08 16:39:12.114137;M2A_Workflow.TaskB Executing TimeFunction (TaskB_Input, 2)
+2022-03-08 16:39:14.116491;M2A_Workflow.TaskB Exit
