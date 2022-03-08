@@ -4,15 +4,15 @@ import _thread
 import time
 def printlog(task,path):
     sen=str(datetime.now())+";"+path+" Entry"
-    f1.write(sen)
+    lis.append(sen)
     if(task['Type']=="Task"):
         sen=str(datetime.now())+";"+path+" Executing "+task["Function"]+" ("+task["Inputs"]["FunctionInput"]+", "+task["Inputs"]["ExecutionTime"]+")"
-        f1.write(sen)
+        lis.append(sen)
         time.sleep(int(task["Inputs"]["ExecutionTime"]))
     else:
         flow_execution(task,path,1)
     sen=str(datetime.now())+";"+path+" Exit"
-    f1.write(sen)
+    lis.append(sen)
 def task_execution(data,path,ex):
     for i in range(len(data)):
         path1=path
@@ -42,10 +42,13 @@ def flow_execution(data,path,n):
             printlog(data,path)
 
 f1= open("m1a.txt","w+")
+lis=[]
 with open('G:\College\Code\KLA\Milestone1A.yaml') as ms1a:
     data = yaml.load(ms1a, Loader=yaml.FullLoader)
 path=""
 if(data[list(data.keys())[0]]["Type"]=="Flow"):
     flow_execution(data,path,0)
+for element in lis:
+    f1.write(element + "\n")
 f1.close()
             
