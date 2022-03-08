@@ -34,8 +34,8 @@ def printlog1(task,path):
             con=con[2:-1]
             print(con)
             print(dic)
-            if(con not in dic):
-                time.sleep(5)
+            while(con not in dic):
+                time.sleep(1)
             if((cond[1]=='<' and dic[con]<err) or (cond[1]=='>' and dic[con]>err)):
                 sen=str(datetime.now())+";"+path+" Executing "+task["Function"]+" ("+task["Inputs"]["Filename"]+")"
                 lis.append(sen)
@@ -106,7 +106,7 @@ def flow_execution(data,path,n):
     
 
 global dic
-f1= open("m2a.txt","w+")
+f1= open("m2b1.txt","w+")
 lis=[]
 with open('G:\College\Code\KLA\Milestone2A.yaml') as ms1a:
     data = yaml.load(ms1a, Loader=yaml.FullLoader)
